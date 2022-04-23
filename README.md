@@ -4,7 +4,7 @@ A collection of Monday.com utilities, many specific to our use.
 
 ## Getting Started
 
-This uses the `poetry` which is ironically installed as,
+This uses the `poetry` instead of setuptools. Install it with pip.
 
     pip install poetry
 
