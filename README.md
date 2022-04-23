@@ -2,6 +2,12 @@
 
 A collection of Monday.com utilities, many specific to our use.
 
+## To Install
+
+TODO consider PyPI for this but until so,
+
+    pip install git+https://github.com/CUHealthAI/mondaydotcom-utils.git
+
 ## Building
 
 To build: 
