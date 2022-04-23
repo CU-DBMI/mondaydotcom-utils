@@ -1,2 +1,0 @@
-pandas
-monday >= 1.2.9

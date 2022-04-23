@@ -1,0 +1,1 @@
+poetry run pytest -s --cov=mondaydotcom_utils/ --cov=tests --cov-report html

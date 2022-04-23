@@ -1,9 +1,13 @@
-import logging
+# pylint: disable="missing-module-docstring"
+
 import json
-from dateutil import parser
-from MondayCom_Time import *
-from MondayCom_FormattedValue import *
+import logging
+
+import numpy as np
 import pandas as pd
+from dateutil import parser
+
+from mondaydotcom_utils.formatted_value import FormattedValue, get_col_defs
 
 logger = logging.getLogger(__name__)
 
@@ -11,7 +15,8 @@ logger = logging.getLogger(__name__)
 def get_items_by_board(conn, board_id, column_id="", column_value=""):
     """
     A common function to lookup all items on a specific board.
-    Setting column_id and column_value, to e.g., "status" and "Done" will fetch only those items,
+    Setting column_id and column_value, to e.g.,
+    "status" and "Done" will fetch only those items,
     otherwise the entire board will be fetched.
 
     Returns a dataframe.
@@ -19,9 +24,7 @@ def get_items_by_board(conn, board_id, column_id="", column_value=""):
 
     if column_id:
         # if a column_id is set, then use one graphql query...
-        test_board = conn.items.fetch_items_by_column_value(
-            board_id, column_id, column_value
-        )
+        test_board = conn.items.fetch_items_by_column_value(board_id, column_id, column_value)
         items = test_board["data"]["items_by_column_values"]
     else:
         # otherwise, use this one to fetch the entire board.
@@ -32,7 +35,7 @@ def get_items_by_board(conn, board_id, column_id="", column_value=""):
     col_defs = get_col_defs(conn, board_id)
 
     # format the column values
-    fv = FormattedValue(col_defs, use_mapped_name=True)
+    formatted_value = FormattedValue(col_defs, use_mapped_name=True)
 
     # build up a list of name-value pairs
     rows = []
@@ -40,26 +43,27 @@ def get_items_by_board(conn, board_id, column_id="", column_value=""):
         item_id = item["id"]
         item_name = item["name"]
         for col in item["column_values"]:
-            row = fv.format(col["id"], col["value"], col["text"])
+            row = formatted_value.format(col["id"], col["value"], col["text"])
             row["monday_id"] = item_id
             row["Title"] = item_name
             rows.append(row)
 
     # create a dataframe
-    df = pd.DataFrame(rows).set_index(["monday_id", "Title", "name"])
+    result_df = pd.DataFrame(rows).set_index(["monday_id", "Title", "name"])
 
     # pivot the table around
-    df = df.unstack(level=-1).droplevel(level=0, axis=1).reset_index()
+    result_df = result_df.unstack(level=-1).droplevel(level=0, axis=1).reset_index()
 
     # change the monday_id to an integer
-    df["monday_id"] = pd.to_numeric(df["monday_id"])
+    result_df["monday_id"] = pd.to_numeric(result_df["monday_id"])
 
-    return df.rename_axis("", axis="columns")
+    return result_df.rename_axis("", axis="columns")
 
 
 def validate_task_record(record):
     """
-    Validate checks individual records and we'll use those rules to create journal records later.
+    Validate checks individual records
+    and we'll use those rules to create journal records later.
 
     Rules:
       1. Either actual hours or sessions times are used, but not both.
@@ -79,29 +83,31 @@ def validate_task_record(record):
     len_sessions_list = len(sessions_list)
     len_owners_list = len(owners_list)
     title = record["Title"]
-    date_completed = record["Date Completed"]
 
     logger.debug(
-        f"actual_hours:{actual_hours}, len(session_list):{len_sessions_list}, len(owners_list):{len_owners_list}"
+        "actual_hours:%s, len(session_list):%s, len(owners_list):%s",
+        actual_hours,
+        len_sessions_list,
+        len_owners_list,
     )
 
     # rule 1
     if not np.isnan(actual_hours) and len_sessions_list > 0:
         record["integration_state"] = "STOP"
         record["integration_state_rule"] = "actual_hours_and_sessions"
-        logger.warning(f'{record["integration_state_rule"]}: {title}')
+        logger.warning("%s: %s", record["integration_state_rule"], title)
 
     # rule 2 - using actual hours requires at least one owner
     elif not np.isnan(actual_hours) and len_owners_list == 0:
         record["integration_state"] = "STOP"
         record["integration_state_rule"] = "actual_hours_and_no_owners"
-        logger.warning(f'{record["integration_state_rule"]}: {title}')
+        logger.warning("%s: %s", record["integration_state_rule"], title)
 
     # rule 3
     elif np.isnan(actual_hours) and len_sessions_list == 0:
         record["integration_state"] = "STOP"
         record["integration_state_rule"] = "no_actual_hours_and_no_sessions"
-        logger.warning(f'{record["integration_state_rule"]}: {title}')
+        logger.warning("%s: %s", record["integration_state_rule"], title)
 
     else:
         record["integration_state"] = "Ready"
@@ -136,7 +142,10 @@ def breakout_record(record, users_df):
     records = []
 
     logger.debug(
-        f"validating: actual_hours:{actual_hours}, len(session_list):{len_sessions_list}, len(owners_list):{len_owners_list}"
+        "validating: actual_hours:%s, len(session_list):%s, len(owners_list):%s",
+        actual_hours,
+        len_sessions_list,
+        len_owners_list,
     )
 
     if not record["Integration Message"].startswith("Ready"):
@@ -154,9 +163,7 @@ def breakout_record(record, users_df):
             new_rec["hours"] = actual_hours / len_owners_list
             # get the task time from date completed... or fallback on the status
             if record["Date Completed"]:
-                new_rec["task_end_date"] = parser.parse(
-                    f"{date_completed} 00:00:00+00:00"
-                )
+                new_rec["task_end_date"] = parser.parse(f"{date_completed} 00:00:00+00:00")
             else:
                 new_rec["task_end_date"] = parser.parse(status_json["changed_at"])
             new_rec["integration_state_rule"] = "hours_split_between_owners"
@@ -170,9 +177,7 @@ def breakout_record(record, users_df):
             new_rec["hours"] = session["hours"]
             # get the task time from date completed... or fallback on the status
             if record["Date Completed"]:
-                new_rec["task_end_date"] = parser.parse(
-                    f"{date_completed} 00:00:00+00:00"
-                )
+                new_rec["task_end_date"] = parser.parse(f"{date_completed} 00:00:00+00:00")
             else:
                 new_rec["task_end_date"] = parser.parse(status_json["changed_at"])
             new_rec["integration_state_rule"] = "hours_from_session_records"

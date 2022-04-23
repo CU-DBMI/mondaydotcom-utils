@@ -1,18 +1,27 @@
+# pylint: disable="missing-module-docstring"
+
 import json
 import logging
-from box import Box
+
+from box import Box, BoxError
 from dateutil import parser
 
 logger = logging.getLogger(__name__)
 
 
-class MondayCom_Time:
-    """I use this to crack open the time tracking json into a more refined structure."""
+class TimeBlock:
+    """
+    I use this to crack open the time tracking json into a more refined structure.
+    """
 
     def __init__(self):
+        """
+        Create a new new time block
+        """
 
         self.time_records = []
         self.total_duration_hours = 0
+        self.timejson = {}
 
     def parse(self, items):
         """
@@ -26,9 +35,11 @@ class MondayCom_Time:
         if items:
             try:
                 self.timejson = Box(json.loads(items))
-            except:
-                logger.warning(f"Cannot load into json: {type(items)} {items}")
+            except BoxError:
+                logger.warning("Cannot load json into Box: %s %s", type(items), items)
                 return
+            except BaseException as ex:  # pylint: disable="broad-except"
+                logger.exception(ex)
 
             # go through each additional_value and convert it into a cleaner dict
             if self.timejson.get("additional_value"):
@@ -36,7 +47,10 @@ class MondayCom_Time:
                     self.time_records.append(self.parse_additional_value(item))
 
     def parse_additional_value(self, item):
-        """Break down the individual session records, capturing the duration."""
+        """
+        Break down the individual session records, capturing the duration.
+        """
+
         new_item = Box()
 
         new_item.owner_id = item.ended_user_id

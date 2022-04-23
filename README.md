@@ -2,6 +2,13 @@
 
 A collection of Monday.com utilities, many specific to our use.
 
+## Getting Started
+
+This uses the `poetry` which is ironically installed as,
+
+    pip install poetry
+
+
 ## To Install
 
 TODO consider PyPI for this but until so,
@@ -10,14 +17,16 @@ TODO consider PyPI for this but until so,
 
 ## Building
 
+To test:
+
+    pytest
+
 To build: 
 
-    python3 -m pip install --upgrade build
-
-    python3 -m build`
+    poetry build
 
 ## Acknowlegements
 
-Quite a bit of heavy lifting against the Monday.com API is done using the ProdPerfect package.
+Quite a bit of heavy lifting against the Monday.com API is done using the (ProdPerfect)[https://github.com/ProdPerfect/monday package. 
 
-https://github.com/ProdPerfect/monday
+Much of the linting and great pep8, pulled from a [cookiecutter template](https://github.com/timothycrosley/cookiecutter-python).
