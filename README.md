@@ -27,6 +27,6 @@ To build:
 
 ## Acknowlegements
 
-Quite a bit of heavy lifting against the Monday.com API is done using the (ProdPerfect)[https://github.com/ProdPerfect/monday package. 
+Quite a bit of heavy lifting against the Monday.com API is done using the (ProdPerfect)[https://github.com/ProdPerfect/monday package] SDK package. 
 
 Much of the linting and great pep8, pulled from a [cookiecutter template](https://github.com/timothycrosley/cookiecutter-python).
