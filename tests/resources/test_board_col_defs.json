@@ -1,0 +1,97 @@
+{
+    "name": {
+        "id": "name",
+        "title": "Name",
+        "type": "name"
+    },
+    "person": {
+        "id": "person",
+        "title": "Person",
+        "type": "multiple-person"
+    },
+    "status": {
+        "id": "status",
+        "title": "Status",
+        "type": "color"
+    },
+    "date4": {
+        "id": "date4",
+        "title": "Date",
+        "type": "date"
+    },
+    "timeline": {
+        "id": "timeline",
+        "title": "Timeline",
+        "type": "timerange"
+    },
+    "numbers": {
+        "id": "numbers",
+        "title": "Timeline Days",
+        "type": "numeric"
+    },
+    "status_1": {
+        "id": "status_1",
+        "title": "Another Status",
+        "type": "color"
+    },
+    "numbers7": {
+        "id": "numbers7",
+        "title": "Percent Complete",
+        "type": "numeric"
+    },
+    "text": {
+        "id": "text",
+        "title": "Notes",
+        "type": "text"
+    },
+    "time_tracking": {
+        "id": "time_tracking",
+        "title": "Time Tracking",
+        "type": "duration"
+    },
+    "hour": {
+        "id": "hour",
+        "title": "Hour",
+        "type": "hour"
+    },
+    "date_1": {
+        "id": "date_1",
+        "title": "Some Date",
+        "type": "date"
+    },
+    "formula": {
+        "id": "formula",
+        "title": "Formula",
+        "type": "formula"
+    },
+    "dependency": {
+        "id": "dependency",
+        "title": "Dependency",
+        "type": "dependency"
+    },
+    "connect_boards": {
+        "id": "connect_boards",
+        "title": "Test Board",
+        "type": "board-relation"
+    },
+    "mirror": {
+        "id": "mirror",
+        "title": "A Mirror Column",
+        "type": "lookup"
+    },
+    "tags": {
+        "id": "tags",
+        "title": "Tags",
+        "type": "tag"
+    },
+    "long_text": {
+        "id": "long_text",
+        "title": "Long Notes",
+        "type": "long-text"
+    },
+    "text7": {
+        "id": "text7",
+        "title": "Notes",
+        "type": "text"
+    }
+}

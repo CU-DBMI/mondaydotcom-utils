@@ -4,10 +4,9 @@ import json
 import logging
 
 import numpy as np
-import pandas as pd
 from dateutil import parser
 
-from mondaydotcom_utils.formatted_value import FormattedValue, get_col_defs
+from mondaydotcom_utils.formatted_value import FormattedBoard, get_col_defs
 
 logger = logging.getLogger(__name__)
 
@@ -35,29 +34,11 @@ def get_items_by_board(conn, board_id, column_id="", column_value=""):
     col_defs = get_col_defs(conn, board_id)
 
     # format the column values
-    formatted_value = FormattedValue(col_defs, use_mapped_name=True)
+    formatted_board = FormattedBoard(col_defs, items)
 
-    # build up a list of name-value pairs
-    rows = []
-    for item in items:
-        item_id = item["id"]
-        item_name = item["name"]
-        for col in item["column_values"]:
-            row = formatted_value.format(col["id"], col["value"], col["text"])
-            row["monday_id"] = item_id
-            row["Title"] = item_name
-            rows.append(row)
+    result_df = formatted_board.to_df()
 
-    # create a dataframe
-    result_df = pd.DataFrame(rows).set_index(["monday_id", "Title", "name"])
-
-    # pivot the table around
-    result_df = result_df.unstack(level=-1).droplevel(level=0, axis=1).reset_index()
-
-    # change the monday_id to an integer
-    result_df["monday_id"] = pd.to_numeric(result_df["monday_id"])
-
-    return result_df.rename_axis("", axis="columns")
+    return result_df
 
 
 def validate_task_record(record):

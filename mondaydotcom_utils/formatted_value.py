@@ -2,8 +2,10 @@
 
 import json
 import logging
+from typing import Dict, List
 
 import numpy as np
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -13,13 +15,11 @@ def get_col_defs(monday_conn, board_id):
     Get the column definitions. Useful for formatting values later.
 
     from https://github.com/ProdPerfect/monday/wiki/Code-Examples#whole-board-formatting-example
-
-    # TODO bring this into a class
     """
     data = monday_conn.boards.fetch_boards_by_id(board_id)
     columns = data["data"]["boards"][0]["columns"]
-    col_defs = {}
 
+    col_defs = {}
     for column in columns:
         col_defs[column["id"]] = column
 
@@ -27,19 +27,57 @@ def get_col_defs(monday_conn, board_id):
     return col_defs
 
 
+# pylint: disable="missing-class-docstring"
+class FormattedBoard:
+
+    # pylint: disable="missing-function-docstring"
+    def __init__(self, col_defs: Dict, items: List = None):
+
+        self.col_defs = col_defs
+        self.items = items
+        self.rows = None
+
+    def format(self):
+
+        item_formatter = FormattedValue(self.col_defs)
+        self.rows = []
+
+        # build up a dict of name-value pairs
+        for item in self.items:
+            row_dict = {}
+            row_dict["monday_id"] = item["id"]
+            row_dict["monday_name"] = item["name"]
+            for col in item["column_values"]:
+                col_dict = item_formatter.format(col["id"], col["value"], col["text"])
+                row_dict.update(col_dict)
+            self.rows.append(row_dict)
+
+    def to_df(self):
+
+        # create a dataframe
+        result_df = pd.DataFrame(self.rows)
+
+        # # change the monday_id to an integer
+        result_df["monday_id"] = pd.to_numeric(result_df["monday_id"])
+
+        return result_df
+
+
 class FormattedValue:
     """
-    Heavily influenced by
+    Influenced by
     https://github.com/ProdPerfect/monday/wiki/Code-Examples#whole-board-formatting-example
 
     Parses an individual "item" from Monday.com column_values
-    and creates a simple name-value pair for each column.
+    and creates simple name-value pair(s) for each column.
 
-    IDEA Some of the values remain in json, and it might be good
-    to have these blown out into more than just one key/value.
+    Column titles in the UI can be duplicates. Duplicate column names can have unexpected results,
+    and are not supported.
+
+    Each formatter returns a list with zero, one, or more name-value pairs in a dict.
     """
 
-    def __init__(self, col_defs, use_mapped_name=True):
+    def __init__(self, col_defs: Dict):
 
         self.col_defs = col_defs
 
@@ -53,31 +91,15 @@ class FormattedValue:
             "tag": self.format_tag_field,
             "multiple-person": self.format_person_field,
             "board-relation": self.format_boardrelation_field,
+            "dependency": self.format_dependency_field,
+            "formula": self.format_formula_field,
+            "lookup": self.format_lookup_field,
+            "timerange": self.format_timerange_field,
+            "duration": self.format_duration_field,
         }
-        self.use_mapped_name = use_mapped_name
-
-    def get_my_name(self, field_name, annotation=""):
-        """
-        If self.use_mapped_name is True, then use the propper mapped name.
-        Else, output the nearly useful field names from Monday.com
-
-        TODO refine this so self.col_defs isn't strictly required
-        """
-
-        if self.use_mapped_name:
-            # If use_mapped_name is true, then use the proper mapped name.
-            mapped_name = self.col_defs[field_name]["title"]
-
-            if annotation:
-                return f"{mapped_name} ({annotation})"
-
-            return mapped_name
-
-        # else return the field name
-        return field_name
 
     @staticmethod
-    def format_default(field_name, value, text):
+    def format_default(field_name, value, text) -> Dict:
         """
         When no other formatter matches, use this as the default.
         """
@@ -87,23 +109,41 @@ class FormattedValue:
             value,
             text,
         )
-        return value
+        return {field_name: value, f"{field_name}__default_formatter": True}
+
+    @staticmethod
+    # pylint: disable="unused-argument, missing-function-docstring"
+    def format_lookup_field(field_name, value, text) -> Dict:
+        """
+        Lookup fields aren't exported, so almost a straight default here.
+        """
+        return {f"{field_name}__mirror": None}
+
+    @staticmethod
+    # pylint: disable="unused-argument, missing-function-docstring"
+    def format_formula_field(field_name, value, text) -> Dict:
+        """
+        Formula fields aren't exported, so almost a straight default here.
+        """
+        return {f"{field_name}__formula": None}
 
     @staticmethod
     # pylint: disable="unused-argument, missing-function-docstring"
     def format_text_field(field_name, value, text):
+        retval = None
         if value is not None:
-            return json.loads(value)
+            retval = json.loads(value)
 
-        return None
+        return {field_name: retval}
 
     @staticmethod
     # pylint: disable="unused-argument, missing-function-docstring"
     def format_date_field(field_name, value, text):
+        retval = None
         if value is not None:
-            return text
+            retval = text
 
-        return None
+        return {field_name: retval}
 
     @staticmethod
     def convert_numeric(value):
@@ -123,35 +163,56 @@ class FormattedValue:
 
     # pylint: disable="unused-argument, missing-function-docstring"
     def format_numeric_field(self, field_name, value, text):
-        return self.convert_numeric(text)
+        return {field_name: self.convert_numeric(text)}
 
     @staticmethod
     # pylint: disable="unused-argument, missing-function-docstring"
     def format_longtext_field(field_name, value, text):
+        retval = None
         if value is not None:
             value = json.loads(value)["text"]
-            return value.strip() if value else None
+            retval = value.strip() if value else None
 
-        return None
+        return {field_name: retval}
+
+    @staticmethod
+    # pylint: disable="unused-argument, missing-function-docstring"
+    def format_timerange_field(field_name, value, text):
+        my_dict = {}
+        retval = None
+        if value is not None:
+            value_json = json.loads(value)
+            for k, v in value_json.items():  # pylint: disable="invalid-name"
+                my_dict.update({f"{field_name}__{k}": v})
+            return my_dict
+
+        return {field_name: retval}
 
     @staticmethod
     # pylint: disable="unused-argument, missing-function-docstring"
     def format_tag_field(field_name, value, text):
-        return text
+        retval = None
+        if value is not None:
+            retval = json.loads(value)["tag_ids"]
+        return {field_name: retval}
 
     @staticmethod
     # pylint: disable="unused-argument, missing-function-docstring"
     def format_color_field(field_name, value, text):
+        my_dict = {}
+
         if value is not None:
+            if text:
+                my_dict.update({f"{field_name}__text": text})
+
             value_json = json.loads(value)
-            # rough, but I'll need the changed_at date
-            my_dict = {"text": text}
+
             if value_json.get("changed_at"):
-                my_dict["changed_at"] = value_json["changed_at"]
+                my_dict.update({f"{field_name}__changed_at": value_json["changed_at"]})
 
-            return json.dumps(my_dict)
+            return my_dict
 
-        return None
+        return {field_name: None}
 
     @staticmethod
     # pylint: disable="unused-argument, missing-function-docstring"
@@ -163,20 +224,54 @@ class FormattedValue:
                 if json_val.get("linkedPulseIds"):
                     for pulse_id in json.loads(value)["linkedPulseIds"]:
                         rows.append(pulse_id["linkedPulseId"])
-                return rows
+                return {field_name: rows}
 
             except BaseException as ex:  # pylint: disable="broad-except"
                 logger.exception(ex)
 
-        return []
+        return {field_name: None}
+
+    @staticmethod
+    # pylint: disable="unused-argument, missing-function-docstring"
+    def format_dependency_field(field_name, value, text):
+        if value is not None:
+            try:
+                json_val = json.loads(value)
+                rows = []
+                if json_val.get("linkedPulseIds"):
+                    for pulse_id in json.loads(value)["linkedPulseIds"]:
+                        rows.append(pulse_id["linkedPulseId"])
+                return {field_name: rows}
+
+            except BaseException as ex:  # pylint: disable="broad-except"
+                logger.exception(ex)
+
+        return {field_name: None}
+
+    @staticmethod
+    # pylint: disable="unused-argument, missing-function-docstring"
+    def format_duration_field(field_name, value, text):
+        my_dict = {}
+        if value is not None:
+            try:
+                json_val = json.loads(value)
+
+                for k, v in json_val.items():  # pylint: disable="invalid-name"
+                    my_dict.update({f"{field_name}__{k}": v})
+                return my_dict
+
+            except BaseException as ex:  # pylint: disable="broad-except"
+                logger.exception(ex)
+
+        return {field_name: None}
 
     @staticmethod
     # pylint: disable="unused-argument, missing-function-docstring"
     def format_person_field(field_name, value, text):
         if value is not None:
-            return json.loads(value)["personsAndTeams"]
+            return {field_name: json.loads(value)["personsAndTeams"]}
 
-        return []
+        return {field_name: None}
 
     # pylint: disable="unused-argument, missing-function-docstring"
     def format_dropdown_field(self, field_name, value, text):
@@ -184,9 +279,9 @@ class FormattedValue:
             labels = json.loads(self.col_defs[field_name]["settings_str"])["labels"]
             # pylint: disable = "consider-using-dict-comprehension"
             label_map = dict([(row["id"], row["name"]) for row in labels])
-            return ", ".join([label_map.get(id) for id in json.loads(value)["ids"]])
+            return {field_name: ", ".join([label_map.get(id) for id in json.loads(value)["ids"]])}
 
-        return None
+        return {field_name: None}
 
     def format(self, field_name, value, text):
         """
@@ -196,25 +291,12 @@ class FormattedValue:
         to "route" based on the `type_to_callable_map`.
         """
         field_type = self.col_defs[field_name]["type"]
+        column_name = self.col_defs[field_name]["title"]
 
         # use the map to lookup the function, using default if one isn't found.
         formatter = self.type_to_callable_map.get(field_type, self.format_default)
 
-        # mirror columns doesn't bring back agg info, and formulas can be just about anything,
-        # so try not to use them. Make that obvious in the column name.
-        if field_type == "lookup":
-            annotation = "mirror"
-        elif field_type == "formula":
-            annotation = "formula"
-        else:
-            annotation = ""
+        formatted_items = formatter(column_name, value, text)
 
-        # call the mapped function
-        value_return = formatter(field_name, value, text)
-
-        result = {
-            "name": self.get_my_name(field_name, annotation),
-            "value": value_return,
-        }
-
-        return result
+        # call the mapped function with the proper column name
+        return formatted_items

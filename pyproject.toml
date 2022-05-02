@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mondaydotcom-utils"
-version = "0.1"
+version = "0.2"
 description = "A collection of Monday.com utilities"
 authors = ["Center for Health AI <cuhealthai-softwareengineering@cuanschutz.edu>"]
 license = "BSD-3"
@@ -12,9 +12,11 @@ monday = "^1.2.9"
 pandas = "^1.4.2"
 python-box = "^6.0.2"
 types-python-dateutil = "^2.8.12"
+pytest = "^7.1.2"
+gql = {extras = ["all"], version = "^3.2.0"}
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^7.1.2"
 pytest-cov = "^3.0.0"
 pytest-mock = "^3.7.0"
 vulture = "^2.3"

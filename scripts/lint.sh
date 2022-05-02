@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euxo pipefail
 
-poetry run cruft check
 poetry run mypy --ignore-missing-imports mondaydotcom_utils/
 poetry run isort --check --diff mondaydotcom_utils/ tests/
 poetry run black --check mondaydotcom_utils/ tests/

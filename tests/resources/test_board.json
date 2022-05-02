@@ -1,0 +1,699 @@
+{
+    "data": {
+        "boards": [
+            {
+                "name": "Test Board",
+                "columns": [
+                    {
+                        "id": "name",
+                        "title": "Name",
+                        "type": "name"
+                    },
+                    {
+                        "id": "person",
+                        "title": "Person",
+                        "type": "multiple-person"
+                    },
+                    {
+                        "id": "status",
+                        "title": "Status",
+                        "type": "color"
+                    },
+                    {
+                        "id": "date4",
+                        "title": "Date",
+                        "type": "date"
+                    },
+                    {
+                        "id": "timeline",
+                        "title": "Timeline",
+                        "type": "timerange"
+                    },
+                    {
+                        "id": "numbers",
+                        "title": "Timeline Days",
+                        "type": "numeric"
+                    },
+                    {
+                        "id": "status_1",
+                        "title": "Another Status",
+                        "type": "color"
+                    },
+                    {
+                        "id": "numbers7",
+                        "title": "Percent Complete",
+                        "type": "numeric"
+                    },
+                    {
+                        "id": "text",
+                        "title": "Notes",
+                        "type": "text"
+                    },
+                    {
+                        "id": "time_tracking",
+                        "title": "Time Tracking",
+                        "type": "duration"
+                    },
+                    {
+                        "id": "hour",
+                        "title": "Hour",
+                        "type": "hour"
+                    },
+                    {
+                        "id": "date_1",
+                        "title": "Some Date",
+                        "type": "date"
+                    },
+                    {
+                        "id": "formula",
+                        "title": "Formula",
+                        "type": "formula"
+                    },
+                    {
+                        "id": "dependency",
+                        "title": "Dependency",
+                        "type": "dependency"
+                    },
+                    {
+                        "id": "connect_boards",
+                        "title": "Test Board",
+                        "type": "board-relation"
+                    },
+                    {
+                        "id": "mirror",
+                        "title": "A Mirror Column",
+                        "type": "lookup"
+                    },
+                    {
+                        "id": "tags",
+                        "title": "Tags",
+                        "type": "tag"
+                    },
+                    {
+                        "id": "long_text",
+                        "title": "Long Notes",
+                        "type": "long-text"
+                    },
+                    {
+                        "id": "text7",
+                        "title": "Notes",
+                        "type": "text"
+                    }
+                ],
+                "items": [
+                    {
+                        "group": {
+                            "id": "topics",
+                            "title": "Group Title"
+                        },
+                        "id": "2619086128",
+                        "name": "Item 1",
+                        "column_values": [
+                            {
+                                "id": "person",
+                                "text": "Steve Taylor",
+                                "type": "multiple-person",
+                                "value": "{\"changed_at\":\"2022-05-02T19:48:44.018Z\",\"personsAndTeams\":[{\"id\":25810257,\"kind\":\"person\"}]}"
+                            },
+                            {
+                                "id": "status",
+                                "text": "Working on it",
+                                "type": "color",
+                                "value": "{\"index\":0,\"post_id\":null,\"changed_at\":\"2019-03-01T17:24:57.321Z\"}"
+                            },
+                            {
+                                "id": "date4",
+                                "text": "2022-04-30",
+                                "type": "date",
+                                "value": "{\"date\":\"2022-04-30\",\"icon\":null,\"changed_at\":\"2022-05-02T16:42:52.076Z\"}"
+                            },
+                            {
+                                "id": "timeline",
+                                "text": "2022-05-02 - 2022-05-05",
+                                "type": "timerange",
+                                "value": "{\"to\":\"2022-05-05\",\"from\":\"2022-05-02\",\"changed_at\":\"2022-05-02T19:48:21.426Z\"}"
+                            },
+                            {
+                                "id": "numbers",
+                                "text": "4",
+                                "type": "numeric",
+                                "value": "\"4\""
+                            },
+                            {
+                                "id": "status_1",
+                                "text": "Stuck",
+                                "type": "color",
+                                "value": "{\"index\":2,\"post_id\":null,\"changed_at\":\"2022-05-02T19:48:31.434Z\"}"
+                            },
+                            {
+                                "id": "numbers7",
+                                "text": "25",
+                                "type": "numeric",
+                                "value": "\"25\""
+                            },
+                            {
+                                "id": "text",
+                                "text": "A note here",
+                                "type": "text",
+                                "value": "\"A note here\""
+                            },
+                            {
+                                "id": "time_tracking",
+                                "text": "00:00:03",
+                                "type": "duration",
+                                "value": "{\"running\":false,\"duration\":3,\"startDate\":1651521018,\"changed_at\":\"2022-05-02T19:50:20.595Z\",\"additional_value\":[{\"id\":222066299,\"account_id\":10368903,\"project_id\":2619086128,\"column_id\":\"time_tracking\",\"started_user_id\":25810257,\"ended_user_id\":25810257,\"started_at\":\"2022-05-02T16:45:09Z\",\"ended_at\":\"2022-05-02T16:45:10Z\",\"manually_entered_start_time\":false,\"manually_entered_end_time\":false,\"manually_entered_start_date\":false,\"manually_entered_end_date\":false,\"created_at\":\"2022-05-02T16:45:10Z\",\"updated_at\":\"2022-05-02T16:45:11Z\",\"status\":\"active\"},{\"id\":222169620,\"account_id\":10368903,\"project_id\":2619086128,\"column_id\":\"time_tracking\",\"started_user_id\":25810257,\"ended_user_id\":25810257,\"started_at\":\"2022-05-02T19:50:18Z\",\"ended_at\":\"2022-05-02T19:50:20Z\",\"manually_entered_start_time\":false,\"manually_entered_end_time\":false,\"manually_entered_start_date\":false,\"manually_entered_end_date\":false,\"created_at\":\"2022-05-02T19:50:18Z\",\"updated_at\":\"2022-05-02T19:50:20Z\",\"status\":\"active\"}]}"
+                            },
+                            {
+                                "id": "hour",
+                                "text": "12:00 PM",
+                                "type": "hour",
+                                "value": "{\"hour\":12,\"minute\":0,\"changed_at\":\"2022-05-02T16:45:25.941Z\"}"
+                            },
+                            {
+                                "id": "date_1",
+                                "text": "2022-05-20",
+                                "type": "date",
+                                "value": "{\"date\":\"2022-05-20\",\"changed_at\":\"2022-05-02T19:48:52.356Z\"}"
+                            },
+                            {
+                                "id": "formula",
+                                "text": "",
+                                "type": "formula",
+                                "value": null
+                            },
+                            {
+                                "id": "dependency",
+                                "text": "Item 2",
+                                "type": "dependency",
+                                "value": "{\"changed_at\":\"2022-05-02T20:09:11.376Z\",\"linkedPulseIds\":[{\"linkedPulseId\":2619086253},{\"linkedPulseId\":2619086190}]}"
+                            },
+                            {
+                                "id": "connect_boards",
+                                "text": "Item 4, Item 2",
+                                "type": "board-relation",
+                                "value": "{\"changed_at\":\"2022-05-02T20:09:22.252Z\",\"linkedPulseIds\":[{\"linkedPulseId\":2619086318},{\"linkedPulseId\":2619086190}]}"
+                            },
+                            {
+                                "id": "mirror",
+                                "text": "Done",
+                                "type": "lookup",
+                                "value": null
+                            },
+                            {
+                                "id": "tags",
+                                "text": "WIP, TIL",
+                                "type": "tag",
+                                "value": "{\"tag_ids\":[14429933,14429935]}"
+                            },
+                            {
+                                "id": "long_text",
+                                "text": "The standard Lorem Ipsum passage, used since the 1500s\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\n\nSection 1.10.32 of \"de Finibus Bonorum et Malorum\", written by Cicero in 45 BC\n\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"",
+                                "type": "long-text",
+                                "value": "{\"text\":\"The standard Lorem Ipsum passage, used since the 1500s\\n\\\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\\"\\n\\nSection 1.10.32 of \\\"de Finibus Bonorum et Malorum\\\", written by Cicero in 45 BC\\n\\\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\\\"\",\"changed_at\":\"2022-05-02T19:52:03.393Z\"}"
+                            },
+                            {
+                                "id": "text7",
+                                "text": "Column names can be duplicated.",
+                                "type": "text",
+                                "value": "\"Column names can be duplicated.\""
+                            }
+                        ]
+                    },
+                    {
+                        "group": {
+                            "id": "topics",
+                            "title": "Group Title"
+                        },
+                        "id": "2619086190",
+                        "name": "Item 2",
+                        "column_values": [
+                            {
+                                "id": "person",
+                                "text": "",
+                                "type": "multiple-person",
+                                "value": null
+                            },
+                            {
+                                "id": "status",
+                                "text": "Done",
+                                "type": "color",
+                                "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2019-03-01T17:28:23.178Z\"}"
+                            },
+                            {
+                                "id": "date4",
+                                "text": "2022-05-05",
+                                "type": "date",
+                                "value": "{\"date\":\"2022-05-05\",\"icon\":null,\"changed_at\":\"2022-05-02T16:42:51.183Z\"}"
+                            },
+                            {
+                                "id": "timeline",
+                                "text": "2022-05-02 - 2022-05-02",
+                                "type": "timerange",
+                                "value": "{\"to\":\"2022-05-02\",\"from\":\"2022-05-02\",\"changed_at\":\"2022-05-02T19:50:06.207Z\",\"visualization_type\":\"milestone\"}"
+                            },
+                            {
+                                "id": "numbers",
+                                "text": "",
+                                "type": "numeric",
+                                "value": null
+                            },
+                            {
+                                "id": "status_1",
+                                "text": "Done",
+                                "type": "color",
+                                "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2022-05-02T16:43:56.002Z\"}"
+                            },
+                            {
+                                "id": "numbers7",
+                                "text": "100",
+                                "type": "numeric",
+                                "value": "\"100\""
+                            },
+                            {
+                                "id": "text",
+                                "text": "",
+                                "type": "text",
+                                "value": null
+                            },
+                            {
+                                "id": "time_tracking",
+                                "text": "00:00:24",
+                                "type": "duration",
+                                "value": "{\"running\":false,\"duration\":24,\"startDate\":1651509935,\"changed_at\":\"2022-05-02T16:45:58.375Z\",\"additional_value\":[{\"id\":222066284,\"account_id\":10368903,\"project_id\":2619086190,\"column_id\":\"time_tracking\",\"started_user_id\":25810257,\"ended_user_id\":25810257,\"started_at\":\"2022-05-02T16:45:07Z\",\"ended_at\":\"2022-05-02T16:45:08Z\",\"manually_entered_start_time\":false,\"manually_entered_end_time\":false,\"manually_entered_start_date\":false,\"manually_entered_end_date\":false,\"created_at\":\"2022-05-02T16:45:08Z\",\"updated_at\":\"2022-05-02T16:45:09Z\",\"status\":\"active\"},{\"id\":222066480,\"account_id\":10368903,\"project_id\":2619086190,\"column_id\":\"time_tracking\",\"started_user_id\":25810257,\"ended_user_id\":25810257,\"started_at\":\"2022-05-02T16:45:35Z\",\"ended_at\":\"2022-05-02T16:45:58Z\",\"manually_entered_start_time\":false,\"manually_entered_end_time\":false,\"manually_entered_start_date\":false,\"manually_entered_end_date\":false,\"created_at\":\"2022-05-02T16:45:36Z\",\"updated_at\":\"2022-05-02T16:46:00Z\",\"status\":\"active\"}]}"
+                            },
+                            {
+                                "id": "hour",
+                                "text": "12:00 PM",
+                                "type": "hour",
+                                "value": "{\"hour\":12,\"minute\":0,\"changed_at\":\"2022-05-02T16:45:24.088Z\"}"
+                            },
+                            {
+                                "id": "date_1",
+                                "text": "2022-02-17",
+                                "type": "date",
+                                "value": "{\"date\":\"2022-02-17\",\"changed_at\":\"2022-05-02T19:05:22.893Z\"}"
+                            },
+                            {
+                                "id": "formula",
+                                "text": "",
+                                "type": "formula",
+                                "value": null
+                            },
+                            {
+                                "id": "dependency",
+                                "text": "",
+                                "type": "dependency",
+                                "value": null
+                            },
+                            {
+                                "id": "connect_boards",
+                                "text": "",
+                                "type": "board-relation",
+                                "value": null
+                            },
+                            {
+                                "id": "mirror",
+                                "text": "",
+                                "type": "lookup",
+                                "value": null
+                            },
+                            {
+                                "id": "tags",
+                                "text": "",
+                                "type": "tag",
+                                "value": null
+                            },
+                            {
+                                "id": "long_text",
+                                "text": "",
+                                "type": "long-text",
+                                "value": null
+                            },
+                            {
+                                "id": "text7",
+                                "text": "",
+                                "type": "text",
+                                "value": null
+                            }
+                        ]
+                    },
+                    {
+                        "group": {
+                            "id": "topics",
+                            "title": "Group Title"
+                        },
+                        "id": "2619086253",
+                        "name": "Item 3",
+                        "column_values": [
+                            {
+                                "id": "person",
+                                "text": "",
+                                "type": "multiple-person",
+                                "value": null
+                            },
+                            {
+                                "id": "status",
+                                "text": "Working on it",
+                                "type": "color",
+                                "value": "{\"index\":0,\"post_id\":null,\"changed_at\":\"2022-05-02T16:44:01.489Z\"}"
+                            },
+                            {
+                                "id": "date4",
+                                "text": "2022-05-05",
+                                "type": "date",
+                                "value": "{\"date\":\"2022-05-05\",\"icon\":null,\"changed_at\":\"2022-05-02T16:42:51.183Z\"}"
+                            },
+                            {
+                                "id": "timeline",
+                                "text": "",
+                                "type": "timerange",
+                                "value": null
+                            },
+                            {
+                                "id": "numbers",
+                                "text": "",
+                                "type": "numeric",
+                                "value": null
+                            },
+                            {
+                                "id": "status_1",
+                                "text": "Stuck",
+                                "type": "color",
+                                "value": "{\"index\":2,\"post_id\":null,\"changed_at\":\"2022-05-02T16:43:59.457Z\"}"
+                            },
+                            {
+                                "id": "numbers7",
+                                "text": "40",
+                                "type": "numeric",
+                                "value": "\"40\""
+                            },
+                            {
+                                "id": "text",
+                                "text": "Another note here",
+                                "type": "text",
+                                "value": "\"Another note here\""
+                            },
+                            {
+                                "id": "time_tracking",
+                                "text": "",
+                                "type": "duration",
+                                "value": null
+                            },
+                            {
+                                "id": "hour",
+                                "text": "",
+                                "type": "hour",
+                                "value": null
+                            },
+                            {
+                                "id": "date_1",
+                                "text": "",
+                                "type": "date",
+                                "value": null
+                            },
+                            {
+                                "id": "formula",
+                                "text": "",
+                                "type": "formula",
+                                "value": null
+                            },
+                            {
+                                "id": "dependency",
+                                "text": "Item 2",
+                                "type": "dependency",
+                                "value": "{\"changed_at\":\"2022-05-02T19:06:25.105Z\",\"linkedPulseIds\":[{\"linkedPulseId\":2619086190}]}"
+                            },
+                            {
+                                "id": "connect_boards",
+                                "text": "",
+                                "type": "board-relation",
+                                "value": null
+                            },
+                            {
+                                "id": "mirror",
+                                "text": "",
+                                "type": "lookup",
+                                "value": null
+                            },
+                            {
+                                "id": "tags",
+                                "text": "WIP",
+                                "type": "tag",
+                                "value": "{\"tag_ids\":[14429933]}"
+                            },
+                            {
+                                "id": "long_text",
+                                "text": "",
+                                "type": "long-text",
+                                "value": null
+                            },
+                            {
+                                "id": "text7",
+                                "text": "",
+                                "type": "text",
+                                "value": null
+                            }
+                        ]
+                    },
+                    {
+                        "group": {
+                            "id": "group_title",
+                            "title": "Group Title"
+                        },
+                        "id": "2619086318",
+                        "name": "Item 4",
+                        "column_values": [
+                            {
+                                "id": "person",
+                                "text": "",
+                                "type": "multiple-person",
+                                "value": null
+                            },
+                            {
+                                "id": "status",
+                                "text": null,
+                                "type": "color",
+                                "value": null
+                            },
+                            {
+                                "id": "date4",
+                                "text": "2022-05-01",
+                                "type": "date",
+                                "value": "{\"date\":\"2022-05-01\",\"icon\":null,\"changed_at\":\"2022-05-02T16:42:51.719Z\"}"
+                            },
+                            {
+                                "id": "timeline",
+                                "text": "",
+                                "type": "timerange",
+                                "value": null
+                            },
+                            {
+                                "id": "numbers",
+                                "text": "",
+                                "type": "numeric",
+                                "value": null
+                            },
+                            {
+                                "id": "status_1",
+                                "text": null,
+                                "type": "color",
+                                "value": null
+                            },
+                            {
+                                "id": "numbers7",
+                                "text": "",
+                                "type": "numeric",
+                                "value": null
+                            },
+                            {
+                                "id": "text",
+                                "text": "",
+                                "type": "text",
+                                "value": null
+                            },
+                            {
+                                "id": "time_tracking",
+                                "text": "",
+                                "type": "duration",
+                                "value": null
+                            },
+                            {
+                                "id": "hour",
+                                "text": "",
+                                "type": "hour",
+                                "value": null
+                            },
+                            {
+                                "id": "date_1",
+                                "text": "2022-04-01",
+                                "type": "date",
+                                "value": "{\"date\":\"2022-04-01\",\"changed_at\":\"2022-05-02T19:05:18.338Z\"}"
+                            },
+                            {
+                                "id": "formula",
+                                "text": "",
+                                "type": "formula",
+                                "value": null
+                            },
+                            {
+                                "id": "dependency",
+                                "text": "",
+                                "type": "dependency",
+                                "value": null
+                            },
+                            {
+                                "id": "connect_boards",
+                                "text": "Item 2",
+                                "type": "board-relation",
+                                "value": "{\"changed_at\":\"2022-05-02T19:07:05.210Z\",\"linkedPulseIds\":[{\"linkedPulseId\":2619086190}]}"
+                            },
+                            {
+                                "id": "mirror",
+                                "text": "Done",
+                                "type": "lookup",
+                                "value": null
+                            },
+                            {
+                                "id": "tags",
+                                "text": "",
+                                "type": "tag",
+                                "value": null
+                            },
+                            {
+                                "id": "long_text",
+                                "text": "",
+                                "type": "long-text",
+                                "value": null
+                            },
+                            {
+                                "id": "text7",
+                                "text": "",
+                                "type": "text",
+                                "value": null
+                            }
+                        ]
+                    },
+                    {
+                        "group": {
+                            "id": "group_title",
+                            "title": "Group Title"
+                        },
+                        "id": "2619086391",
+                        "name": "Item 5",
+                        "column_values": [
+                            {
+                                "id": "person",
+                                "text": "",
+                                "type": "multiple-person",
+                                "value": null
+                            },
+                            {
+                                "id": "status",
+                                "text": null,
+                                "type": "color",
+                                "value": null
+                            },
+                            {
+                                "id": "date4",
+                                "text": "2022-05-01",
+                                "type": "date",
+                                "value": "{\"date\":\"2022-05-01\",\"icon\":null,\"changed_at\":\"2022-05-02T16:42:51.719Z\"}"
+                            },
+                            {
+                                "id": "timeline",
+                                "text": "",
+                                "type": "timerange",
+                                "value": null
+                            },
+                            {
+                                "id": "numbers",
+                                "text": "",
+                                "type": "numeric",
+                                "value": null
+                            },
+                            {
+                                "id": "status_1",
+                                "text": null,
+                                "type": "color",
+                                "value": null
+                            },
+                            {
+                                "id": "numbers7",
+                                "text": "0",
+                                "type": "numeric",
+                                "value": "\"0\""
+                            },
+                            {
+                                "id": "text",
+                                "text": "",
+                                "type": "text",
+                                "value": null
+                            },
+                            {
+                                "id": "time_tracking",
+                                "text": "03:23:30",
+                                "type": "duration",
+                                "value": "{\"running\":\"true\",\"duration\":26,\"startDate\":1651509960,\"changed_at\":\"2022-05-02T16:46:00.467Z\",\"additional_value\":[{\"id\":222066312,\"account_id\":10368903,\"project_id\":2619086391,\"column_id\":\"time_tracking\",\"started_user_id\":25810257,\"ended_user_id\":25810257,\"started_at\":\"2022-05-02T16:45:11Z\",\"ended_at\":\"2022-05-02T16:45:37Z\",\"manually_entered_start_time\":false,\"manually_entered_end_time\":false,\"manually_entered_start_date\":false,\"manually_entered_end_date\":false,\"created_at\":\"2022-05-02T16:45:12Z\",\"updated_at\":\"2022-05-02T16:45:38Z\",\"status\":\"active\"},{\"id\":222066660,\"account_id\":10368903,\"project_id\":2619086391,\"column_id\":\"time_tracking\",\"started_user_id\":25810257,\"ended_user_id\":null,\"started_at\":\"2022-05-02T16:46:00Z\",\"ended_at\":null,\"manually_entered_start_time\":false,\"manually_entered_end_time\":false,\"manually_entered_start_date\":false,\"manually_entered_end_date\":false,\"created_at\":\"2022-05-02T16:46:01Z\",\"updated_at\":\"2022-05-02T16:46:01Z\",\"status\":\"active\"}]}"
+                            },
+                            {
+                                "id": "hour",
+                                "text": "",
+                                "type": "hour",
+                                "value": null
+                            },
+                            {
+                                "id": "date_1",
+                                "text": "",
+                                "type": "date",
+                                "value": null
+                            },
+                            {
+                                "id": "formula",
+                                "text": "",
+                                "type": "formula",
+                                "value": null
+                            },
+                            {
+                                "id": "dependency",
+                                "text": "",
+                                "type": "dependency",
+                                "value": null
+                            },
+                            {
+                                "id": "connect_boards",
+                                "text": "",
+                                "type": "board-relation",
+                                "value": null
+                            },
+                            {
+                                "id": "mirror",
+                                "text": "",
+                                "type": "lookup",
+                                "value": null
+                            },
+                            {
+                                "id": "tags",
+                                "text": "",
+                                "type": "tag",
+                                "value": null
+                            },
+                            {
+                                "id": "long_text",
+                                "text": "",
+                                "type": "long-text",
+                                "value": null
+                            },
+                            {
+                                "id": "text7",
+                                "text": "",
+                                "type": "text",
+                                "value": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "account_id": 10368903
+}
