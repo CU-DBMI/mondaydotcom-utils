@@ -2,12 +2,43 @@
 
 import json
 import logging
-from typing import Dict, List
+from typing import Dict
 
 import numpy as np
 import pandas as pd
 
 logger = logging.getLogger(__name__)
+
+
+def get_items_by_board(conn, board_id, column_id="", column_value=""):
+    """
+    A common function to lookup all items on a specific board.
+    Setting column_id and column_value, to e.g.,
+    "status" and "Done" will fetch only those items,
+    otherwise the entire board will be fetched.
+
+    Returns a dataframe.
+    """
+
+    if column_id:
+        # if a column_id is set, then use one graphql query...
+        test_board = conn.items.fetch_items_by_column_value(board_id, column_id, column_value)
+        items = test_board["data"]["items_by_column_values"]
+    else:
+        # otherwise, use this one to fetch the entire board.
+        test_board = conn.boards.fetch_items_by_board_id(board_id)
+        items = test_board["data"]["boards"][0]["items"]
+
+    # Grab a map of column IDs, their settings, and proper names.
+    col_defs = get_col_defs(conn, board_id)
+
+    # format the column values
+    formatted_board = FormattedBoard(col_defs)
+    formatted_board.format(items)
+
+    result_df = formatted_board.to_df()
+
+    return result_df
 
 
 def get_col_defs(monday_conn, board_id):
@@ -31,19 +62,18 @@ def get_col_defs(monday_conn, board_id):
 class FormattedBoard:
 
     # pylint: disable="missing-function-docstring"
-    def __init__(self, col_defs: Dict, items: List = None):
+    def __init__(self, col_defs):
 
         self.col_defs = col_defs
-        self.items = items
-        self.rows = None
+        self.rows = []
 
-    def format(self):
+    def format(self, items):
 
         item_formatter = FormattedValue(self.col_defs)
         self.rows = []
 
         # build up a dict of name-value pairs
-        for item in self.items:
+        for item in items:
             row_dict = {}
             row_dict["monday_id"] = item["id"]
             row_dict["monday_name"] = item["name"]
@@ -96,6 +126,8 @@ class FormattedValue:
             "lookup": self.format_lookup_field,
             "timerange": self.format_timerange_field,
             "duration": self.format_duration_field,
+            "subtasks": self.format_subtasks_field,
+            "boolean": self.format_boolean_field,
         }
 
     @staticmethod
@@ -216,6 +248,24 @@ class FormattedValue:
 
     @staticmethod
     # pylint: disable="unused-argument, missing-function-docstring"
+    def format_boolean_field(field_name, value, text):
+        my_dict = {}
+
+        if value is not None:
+
+            value_json = json.loads(value)
+            my_dict.update({f"{field_name}__checked": True})
+
+            if value_json.get("changed_at"):
+                my_dict.update({f"{field_name}__changed_at": value_json["changed_at"]})
+
+        else:
+            my_dict.update({f"{field_name}__checked": False})
+
+        return my_dict
+
+    @staticmethod
+    # pylint: disable="unused-argument, missing-function-docstring"
     def format_boardrelation_field(field_name, value, text):
         if value is not None:
             try:
@@ -225,6 +275,24 @@ class FormattedValue:
                     for pulse_id in json.loads(value)["linkedPulseIds"]:
                         rows.append(pulse_id["linkedPulseId"])
                 return {field_name: rows}
+
+            except BaseException as ex:  # pylint: disable="broad-except"
+                logger.exception(ex)
+
+        return {field_name: None}
+
+    @staticmethod
+    # pylint: disable="unused-argument, missing-function-docstring"
+    def format_subtasks_field(field_name, value, text):
+        if value is not None:
+            try:
+                json_val = json.loads(value)
+                rows = []
+                if json_val.get("linkedPulseIds"):
+                    for pulse_id in json.loads(value)["linkedPulseIds"]:
+                        rows.append(pulse_id["linkedPulseId"])
+                if len(rows) > 0:
+                    return {field_name: rows}
 
             except BaseException as ex:  # pylint: disable="broad-except"
                 logger.exception(ex)

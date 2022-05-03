@@ -93,5 +93,15 @@
         "id": "text7",
         "title": "Notes",
         "type": "text"
+    },
+    "subitems": {
+        "id": "subitems",
+        "title": "Subitems",
+        "type": "subtasks"
+    },
+    "check": {
+        "id": "check",
+        "title": "Check",
+        "type": "boolean"
     }
 }

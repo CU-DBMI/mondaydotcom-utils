@@ -6,39 +6,7 @@ import logging
 import numpy as np
 from dateutil import parser
 
-from mondaydotcom_utils.formatted_value import FormattedBoard, get_col_defs
-
 logger = logging.getLogger(__name__)
-
-
-def get_items_by_board(conn, board_id, column_id="", column_value=""):
-    """
-    A common function to lookup all items on a specific board.
-    Setting column_id and column_value, to e.g.,
-    "status" and "Done" will fetch only those items,
-    otherwise the entire board will be fetched.
-
-    Returns a dataframe.
-    """
-
-    if column_id:
-        # if a column_id is set, then use one graphql query...
-        test_board = conn.items.fetch_items_by_column_value(board_id, column_id, column_value)
-        items = test_board["data"]["items_by_column_values"]
-    else:
-        # otherwise, use this one to fetch the entire board.
-        test_board = conn.boards.fetch_items_by_board_id(board_id)
-        items = test_board["data"]["boards"][0]["items"]
-
-    # Grab a map of column IDs, their settings, and proper names.
-    col_defs = get_col_defs(conn, board_id)
-
-    # format the column values
-    formatted_board = FormattedBoard(col_defs, items)
-
-    result_df = formatted_board.to_df()
-
-    return result_df
 
 
 def validate_task_record(record):

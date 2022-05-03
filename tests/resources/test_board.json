@@ -10,6 +10,11 @@
                         "type": "name"
                     },
                     {
+                        "id": "subitems",
+                        "title": "Subitems",
+                        "type": "subtasks"
+                    },
+                    {
                         "id": "person",
                         "title": "Person",
                         "type": "multiple-person"
@@ -96,8 +101,13 @@
                     },
                     {
                         "id": "text7",
-                        "title": "Notes",
+                        "title": "Notes2",
                         "type": "text"
+                    },
+                    {
+                        "id": "check",
+                        "title": "Check",
+                        "type": "boolean"
                     }
                 ],
                 "items": [
@@ -109,6 +119,12 @@
                         "id": "2619086128",
                         "name": "Item 1",
                         "column_values": [
+                            {
+                                "id": "subitems",
+                                "text": "",
+                                "type": "subtasks",
+                                "value": "{\"linkedPulseIds\":[{\"linkedPulseId\":2621588113}]}"
+                            },
                             {
                                 "id": "person",
                                 "text": "Steve Taylor",
@@ -216,6 +232,12 @@
                                 "text": "Column names can be duplicated.",
                                 "type": "text",
                                 "value": "\"Column names can be duplicated.\""
+                            },
+                            {
+                                "id": "check",
+                                "text": "v",
+                                "type": "boolean",
+                                "value": "{\"checked\":\"true\",\"changed_at\":\"2022-05-03T00:47:16.789Z\"}"
                             }
                         ]
                     },
@@ -227,6 +249,12 @@
                         "id": "2619086190",
                         "name": "Item 2",
                         "column_values": [
+                            {
+                                "id": "subitems",
+                                "text": "",
+                                "type": "subtasks",
+                                "value": null
+                            },
                             {
                                 "id": "person",
                                 "text": "",
@@ -334,6 +362,12 @@
                                 "text": "",
                                 "type": "text",
                                 "value": null
+                            },
+                            {
+                                "id": "check",
+                                "text": "",
+                                "type": "boolean",
+                                "value": null
                             }
                         ]
                     },
@@ -345,6 +379,12 @@
                         "id": "2619086253",
                         "name": "Item 3",
                         "column_values": [
+                            {
+                                "id": "subitems",
+                                "text": "",
+                                "type": "subtasks",
+                                "value": null
+                            },
                             {
                                 "id": "person",
                                 "text": "",
@@ -452,6 +492,12 @@
                                 "text": "",
                                 "type": "text",
                                 "value": null
+                            },
+                            {
+                                "id": "check",
+                                "text": "",
+                                "type": "boolean",
+                                "value": null
                             }
                         ]
                     },
@@ -463,6 +509,12 @@
                         "id": "2619086318",
                         "name": "Item 4",
                         "column_values": [
+                            {
+                                "id": "subitems",
+                                "text": "",
+                                "type": "subtasks",
+                                "value": null
+                            },
                             {
                                 "id": "person",
                                 "text": "",
@@ -570,6 +622,12 @@
                                 "text": "",
                                 "type": "text",
                                 "value": null
+                            },
+                            {
+                                "id": "check",
+                                "text": "",
+                                "type": "boolean",
+                                "value": null
                             }
                         ]
                     },
@@ -581,6 +639,12 @@
                         "id": "2619086391",
                         "name": "Item 5",
                         "column_values": [
+                            {
+                                "id": "subitems",
+                                "text": "",
+                                "type": "subtasks",
+                                "value": null
+                            },
                             {
                                 "id": "person",
                                 "text": "",
@@ -631,7 +695,7 @@
                             },
                             {
                                 "id": "time_tracking",
-                                "text": "03:23:30",
+                                "text": "08:01:24",
                                 "type": "duration",
                                 "value": "{\"running\":\"true\",\"duration\":26,\"startDate\":1651509960,\"changed_at\":\"2022-05-02T16:46:00.467Z\",\"additional_value\":[{\"id\":222066312,\"account_id\":10368903,\"project_id\":2619086391,\"column_id\":\"time_tracking\",\"started_user_id\":25810257,\"ended_user_id\":25810257,\"started_at\":\"2022-05-02T16:45:11Z\",\"ended_at\":\"2022-05-02T16:45:37Z\",\"manually_entered_start_time\":false,\"manually_entered_end_time\":false,\"manually_entered_start_date\":false,\"manually_entered_end_date\":false,\"created_at\":\"2022-05-02T16:45:12Z\",\"updated_at\":\"2022-05-02T16:45:38Z\",\"status\":\"active\"},{\"id\":222066660,\"account_id\":10368903,\"project_id\":2619086391,\"column_id\":\"time_tracking\",\"started_user_id\":25810257,\"ended_user_id\":null,\"started_at\":\"2022-05-02T16:46:00Z\",\"ended_at\":null,\"manually_entered_start_time\":false,\"manually_entered_end_time\":false,\"manually_entered_start_date\":false,\"manually_entered_end_date\":false,\"created_at\":\"2022-05-02T16:46:01Z\",\"updated_at\":\"2022-05-02T16:46:01Z\",\"status\":\"active\"}]}"
                             },
@@ -687,6 +751,12 @@
                                 "id": "text7",
                                 "text": "",
                                 "type": "text",
+                                "value": null
+                            },
+                            {
+                                "id": "check",
+                                "text": "",
+                                "type": "boolean",
                                 "value": null
                             }
                         ]

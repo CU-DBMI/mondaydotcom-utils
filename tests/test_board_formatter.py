@@ -27,12 +27,13 @@ def test_board_formatter():
     ) as file_handle:
         col_defs = json.load(file_handle)
 
-    board_formatter = FormattedBoard(col_defs, items)
-    board_formatter.format()
+    board_formatter = FormattedBoard(col_defs)
+    board_formatter.format(items)
 
     assert board_formatter.to_df().columns.to_list() == [
         "monday_id",
         "monday_name",
+        "Subitems",
         "Person",
         "Status__text",
         "Status__changed_at",
@@ -59,6 +60,8 @@ def test_board_formatter():
         "A Mirror Column__mirror",
         "Tags",
         "Long Notes",
+        "Check__checked",
+        "Check__changed_at",
         "Timeline__visualization_type",
         "Timeline",
         "Time Tracking",
