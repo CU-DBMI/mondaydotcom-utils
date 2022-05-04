@@ -82,6 +82,8 @@ class FormattedBoard:
                 row_dict.update(col_dict)
             self.rows.append(row_dict)
 
+        return self.rows
+
     def to_df(self):
 
         # create a dataframe
