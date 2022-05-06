@@ -12,6 +12,7 @@ dagger.#Plan & {
 			"./": read: contents:                    dagger.#FS
 			"./mondaydotcom_utils": write: contents: actions.clean.black.export.directories."/workdir/mondaydotcom_utils"
 			"./tests": write: contents:              actions.clean.black.export.directories."/workdir/tests"
+			"./project.cue": write: contents:        actions.clean.cue.export.files."/workdir/project.cue"
 			"./htmlcov": write: contents:            actions.test.pytest.export.directories."/workdir/htmlcov"
 		}
 	}
@@ -73,6 +74,31 @@ dagger.#Plan & {
 				},
 			]
 		}
+		// cuelang build
+		cue_build: docker.#Build & {
+			steps: [
+				docker.#Pull & {
+					source: "golang:latest"
+				},
+				docker.#Run & {
+					command: {
+						name: "mkdir"
+						args: ["/workdir"]
+					}
+				},
+				docker.#Copy & {
+					contents: client.filesystem."./".read.contents
+					source:   "./project.cue"
+					dest:     "/workdir/project.cue"
+				},
+				docker.#Run & {
+					command: {
+						name: "go"
+						args: ["install", "cuelang.org/go/cmd/cue@latest"]
+					}
+				},
+			]
+		}
 		// applied code and/or file formatting
 		clean: {
 			// sort python imports with isort
@@ -97,6 +123,18 @@ dagger.#Plan & {
 						"/workdir/mondaydotcom_utils": _
 						"/workdir/tests":              _
 					}
+				}
+			}
+			// code formatting for cuelang
+			cue: docker.#Run & {
+				input:   cue_build.output
+				workdir: "/workdir"
+				command: {
+					name: "cue"
+					args: ["fmt", "/workdir/project.cue"]
+				}
+				export: {
+					files: "/workdir/project.cue": _
 				}
 			}
 		}
@@ -157,6 +195,7 @@ dagger.#Plan & {
 				}
 			}
 		}
+		// run code tests
 		test: {
 			// run pytest tests
 			pytest: docker.#Run & {
